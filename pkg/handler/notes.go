@@ -18,6 +18,19 @@ func (h *Handler) createNote(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	spellChecks, err := h.services.GettingErrors(input.Description)
+	if err != nil {
+		newErrorResponse(w, http.StatusBadRequest, "spelling error")
+		return
+	}
+
+	formattedText, err := h.services.SpellChecking(spellChecks, input.Description)
+	if err != nil {
+		newErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	input.Description = formattedText
 	id, err := h.services.Create(userId, input)
 	if err != nil {
 		newErrorResponse(w, http.StatusInternalServerError, err.Error())
