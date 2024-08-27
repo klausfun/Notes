@@ -11,6 +11,8 @@ type Authorization interface {
 }
 
 type Notes interface {
+	Create(userId int, note models.Note) (int, error)
+	GetAll(userId int) ([]models.Note, error)
 }
 
 type Repository struct {
@@ -21,5 +23,6 @@ type Repository struct {
 func NewRepository(db *sql.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
+		Notes:         NewNotePostgres(db),
 	}
 }

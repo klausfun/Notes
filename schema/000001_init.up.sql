@@ -6,11 +6,6 @@ CREATE TABLE users
     email         varchar(255) not null unique
 );
 
--- INSERT INTO event_states (name)
--- VALUES ('scheduled'),
---        ('in_progress'),
---        ('ended');
-
 CREATE TABLE notes
 (
     id          serial                                      not null unique,
